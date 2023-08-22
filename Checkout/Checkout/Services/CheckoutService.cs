@@ -13,7 +13,14 @@ namespace Checkout.Services
 
         public void Scan(string item)
         {
-            Cart.Add(item, 1);
+            if (Cart.ContainsKey(item))
+            {
+                ++Cart[item];
+            }
+            else
+            {
+                Cart.Add(item, 1);
+            }
         }
 
         public int GetQuantityByItem(string item)
