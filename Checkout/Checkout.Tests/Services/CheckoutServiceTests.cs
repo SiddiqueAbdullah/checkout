@@ -1,5 +1,6 @@
 ﻿using Checkout.Services;
 using Checkout.Services.Interface;
+using Checkout.Errors;
 
 namespace Checkout.Tests.Services
 {
@@ -47,6 +48,12 @@ namespace Checkout.Tests.Services
             _checkoutService.Scan("A");
 
             Assert.Equal(2, _checkoutService.GetQuantityByItem("A"));
+        }
+
+        [Fact]
+        public void Scan_Should_Throw_On_Item_Not_Found()
+        {
+            Assert.Throws<ItemNotFoundException>(() => _checkoutService.Scan("Z"));
         }
     }
 }
