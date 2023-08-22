@@ -1,4 +1,6 @@
 ﻿using Checkout.Services.Interface;
+using Checkout.Data;
+using Checkout.Errors;
 
 namespace Checkout.Services
 {
@@ -13,6 +15,11 @@ namespace Checkout.Services
 
         public void Scan(string item)
         {
+            if(!Database.Products.Any(p => p.SKU == item))
+            {
+                throw new ItemNotFoundException(item);
+            }
+
             if (Cart.ContainsKey(item))
             {
                 ++Cart[item];
