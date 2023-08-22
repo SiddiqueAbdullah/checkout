@@ -89,5 +89,18 @@ namespace Checkout.Tests.Services
 
             Assert.Equal(130, price);
         }
+
+        [Fact]
+        public void GetTotalPrice_Should_Use_Special_Price_Only_For_Qualified_Quantity()
+        {
+            _checkoutService.Scan("A");
+            _checkoutService.Scan("A");
+            _checkoutService.Scan("A");
+            _checkoutService.Scan("A");
+
+            var price = _checkoutService.GetTotalPrice();
+
+            Assert.Equal(130 + 50, price);
+        }
     }
 }
