@@ -13,7 +13,7 @@ namespace Checkout.Services
 
         public void Scan(string item)
         {
-            throw new NotImplementedException();
+            Cart.Add(item, 1);
         }
 
         public int GetQuantityByItem(string item)
