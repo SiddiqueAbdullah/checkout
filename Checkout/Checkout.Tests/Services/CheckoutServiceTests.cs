@@ -65,5 +65,17 @@ namespace Checkout.Tests.Services
 
             Assert.Equal(50, price);
         }
+
+        [Fact]
+        public void GetTotalPrice_Should_Return_Multiple_Item_Total_Price()
+        {
+            _checkoutService.Scan("A");
+            _checkoutService.Scan("A");
+            _checkoutService.Scan("B");
+
+            var price = _checkoutService.GetTotalPrice();
+
+            Assert.Equal(50 * 2 + 30, price);
+        }
     }
 }
