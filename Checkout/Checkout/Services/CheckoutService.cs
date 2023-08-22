@@ -32,7 +32,14 @@ namespace Checkout.Services
 
         public int GetTotalPrice()
         {
-            throw new NotImplementedException();
+            var totalPrice = 0;
+
+            foreach(var item in Cart)
+            {
+                totalPrice += Database.Products.First(p => p.SKU == item.Key).UnitPrice * item.Value;
+            }
+
+            return totalPrice;
         }
     }
 }
