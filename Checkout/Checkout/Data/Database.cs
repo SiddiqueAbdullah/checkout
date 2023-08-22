@@ -19,8 +19,8 @@ namespace Checkout.Data
 
             SpecialPrices = new List<SpecialPrice>
             {
-                new(3, 130),
-                new(2, 45)
+                new("A", 3, 130),
+                new("B", 2, 45)
             };
         }
     }

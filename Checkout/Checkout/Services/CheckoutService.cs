@@ -36,7 +36,19 @@ namespace Checkout.Services
 
             foreach(var item in Cart)
             {
-                totalPrice += Database.Products.First(p => p.SKU == item.Key).UnitPrice * item.Value;
+                var unitPrice = Database.Products.First(p => p.SKU == item.Key).UnitPrice;
+                var quantity = item.Value;
+
+                var specialPrice = Database.SpecialPrices.FirstOrDefault(sp => sp.Item == item.Key);
+
+                if (specialPrice != null && item.Value >= specialPrice.RequiredQuantity)
+                {
+                    totalPrice += (quantity / specialPrice.RequiredQuantity) * specialPrice.Price + (quantity % specialPrice.RequiredQuantity) * unitPrice;
+                }
+                else
+                {
+                    totalPrice += unitPrice * item.Value;
+                }
             }
 
             return totalPrice;
