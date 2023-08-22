@@ -13,9 +13,13 @@ namespace Checkout.Tests.Services
         }
 
         [Fact]
-        public void Scan_Should_Run_Success()
+        public void Scan_Should_Add_Item()
         {
+            Assert.Equal(0, _checkoutService.GetQuantityByItem("A"));
+
             _checkoutService.Scan("A");
+
+            Assert.Equal(1, _checkoutService.GetQuantityByItem("A"));
         }
     }
 }
