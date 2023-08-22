@@ -6,6 +6,7 @@ namespace Checkout.Services
 {
     public class CheckoutService : ICheckoutService
     {
+        //Adding cart as dictionary for simplicity, but in realworld scenario should be extracted as a separated object/service 
         private readonly Dictionary<string, int> _cart = new Dictionary<string, int>();
         private readonly IProductRepository _productRepository;
 

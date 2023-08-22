@@ -21,6 +21,7 @@ namespace Checkout.Models
                 throw new PriceRulesNotSetException(SKU);
             }
 
+            //Considering only 2 PriceRules just for the test, but can be extended to allow n rules
             var unitPrice = PriceRules.First(pr => pr.RequiredQuantity == 1).Price;
             var qualifiedPriceRule = PriceRules.FirstOrDefault(pr => pr.RequiredQuantity > 1 && pr.RequiredQuantity <= quantity);
 
