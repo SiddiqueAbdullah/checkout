@@ -23,6 +23,19 @@ namespace Checkout.Tests.Services
         }
 
         [Fact]
+        public void Scan_Should_Add_Multiple_Items()
+        {
+            Assert.Equal(0, _checkoutService.GetQuantityByItem("A"));
+            Assert.Equal(0, _checkoutService.GetQuantityByItem("B"));
+
+            _checkoutService.Scan("A");
+            _checkoutService.Scan("B");
+
+            Assert.Equal(1, _checkoutService.GetQuantityByItem("A"));
+            Assert.Equal(1, _checkoutService.GetQuantityByItem("B"));
+        }
+
+        [Fact]
         public void Scan_Should_Increase_Quantity_On_Multiple_Scan_Of_Same_Item()
         {
             Assert.Equal(0, _checkoutService.GetQuantityByItem("A"));
