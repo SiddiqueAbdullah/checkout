@@ -8,11 +8,6 @@ namespace Checkout.Services
     {
         private Dictionary<string, int> Cart = new Dictionary<string, int>();
 
-        public int GetTotalPrice()
-        {
-            throw new NotImplementedException();
-        }
-
         public void Scan(string item)
         {
             if(!Database.Products.Any(p => p.SKU == item))
@@ -33,6 +28,11 @@ namespace Checkout.Services
         public int GetQuantityByItem(string item)
         {
             return Cart.ContainsKey(item) ? Cart[item] : 0;
+        }
+
+        public int GetTotalPrice()
+        {
+            throw new NotImplementedException();
         }
     }
 }

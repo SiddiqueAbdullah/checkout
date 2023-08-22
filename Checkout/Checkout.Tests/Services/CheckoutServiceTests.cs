@@ -55,5 +55,15 @@ namespace Checkout.Tests.Services
         {
             Assert.Throws<ItemNotFoundException>(() => _checkoutService.Scan("Z"));
         }
+
+        [Fact]
+        public void GetTotalPrice_Should_Return_Item_Price()
+        {
+            _checkoutService.Scan("A");
+
+            var price = _checkoutService.GetTotalPrice();
+
+            Assert.Equal(50, price);
+        }
     }
 }
