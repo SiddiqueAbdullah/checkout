@@ -6,7 +6,7 @@ namespace Checkout.Services
 {
     public class CheckoutService : ICheckoutService
     {
-        private Dictionary<string, int> _cart = new Dictionary<string, int>();
+        private readonly Dictionary<string, int> _cart = new Dictionary<string, int>();
         private readonly IProductRepository _productRepository;
 
         public CheckoutService(IProductRepository productRepository)

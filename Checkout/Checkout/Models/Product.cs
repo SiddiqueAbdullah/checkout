@@ -1,4 +1,5 @@
 ﻿using Checkout.Models.Interfaces;
+using Checkout.Errors;
 
 namespace Checkout.Models
 {
@@ -15,6 +16,11 @@ namespace Checkout.Models
 
         public int GetPriceByQuantity(int quantity)
         {
+            if(!PriceRules.Any())
+            {
+                throw new PriceRulesNotSetException(SKU);
+            }
+
             var unitPrice = PriceRules.First(pr => pr.RequiredQuantity == 1).Price;
             var qualifiedPriceRule = PriceRules.FirstOrDefault(pr => pr.RequiredQuantity > 1 && pr.RequiredQuantity <= quantity);
 
