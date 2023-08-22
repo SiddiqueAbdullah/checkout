@@ -1,6 +1,7 @@
 ﻿using Checkout.Services;
 using Checkout.Services.Interface;
 using Checkout.Errors;
+using Checkout.Tests.Mocks;
 
 namespace Checkout.Tests.Services
 {
@@ -10,7 +11,7 @@ namespace Checkout.Tests.Services
 
         public CheckoutServiceTests()
         {
-            _checkoutService = new CheckoutService();
+            _checkoutService = new CheckoutService(new MockedProductRepository());
         }
 
         [Fact]

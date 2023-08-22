@@ -4,7 +4,7 @@ using Checkout.Models;
 
 namespace Checkout.Tests.Mocks
 {
-    public class MockedProductRepository : IProductRepository
+    internal class MockedProductRepository : IProductRepository
     {
         public IEnumerable<IProduct> Products { get;  }
 
@@ -19,9 +19,9 @@ namespace Checkout.Tests.Mocks
             };
         }
 
-        public IProduct FindBySKU(string sKU)
+        public IProduct? FindBySKU(string sKU)
         {
-            return Products.First(p => p.SKU == sKU);
+            return Products.FirstOrDefault(p => p.SKU == sKU);
         }
     }
 }

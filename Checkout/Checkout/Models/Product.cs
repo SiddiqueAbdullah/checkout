@@ -16,7 +16,7 @@ namespace Checkout.Models
         public int GetPriceByQuantity(int quantity)
         {
             var unitPrice = PriceRules.First(pr => pr.RequiredQuantity == 1).Price;
-            var qualifiedPriceRule = PriceRules.FirstOrDefault(pr => pr.RequiredQuantity > 1 && pr.RequiredQuantity < quantity);
+            var qualifiedPriceRule = PriceRules.FirstOrDefault(pr => pr.RequiredQuantity > 1 && pr.RequiredQuantity <= quantity);
 
             if(qualifiedPriceRule == null)
             {

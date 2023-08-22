@@ -1,54 +1,49 @@
 ﻿using Checkout.Services.Interface;
-using Checkout.Data;
 using Checkout.Errors;
+using Checkout.Repositories.Interfaces;
 
 namespace Checkout.Services
 {
     public class CheckoutService : ICheckoutService
     {
-        private Dictionary<string, int> Cart = new Dictionary<string, int>();
+        private Dictionary<string, int> _cart = new Dictionary<string, int>();
+        private readonly IProductRepository _productRepository;
+
+        public CheckoutService(IProductRepository productRepository)
+        {
+            _productRepository = productRepository;
+        }
 
         public void Scan(string item)
         {
-            if(!Database.Products.Any(p => p.SKU == item))
+            if(_productRepository.FindBySKU(item) == null)
             {
                 throw new ItemNotFoundException(item);
             }
 
-            if (Cart.ContainsKey(item))
+            if (_cart.ContainsKey(item))
             {
-                ++Cart[item];
+                ++_cart[item];
             }
             else
             {
-                Cart.Add(item, 1);
+                _cart.Add(item, 1);
             }
         }
 
         public int GetQuantityByItem(string item)
         {
-            return Cart.ContainsKey(item) ? Cart[item] : 0;
+            return _cart.ContainsKey(item) ? _cart[item] : 0;
         }
 
         public int GetTotalPrice()
         {
             var totalPrice = 0;
 
-            foreach(var item in Cart)
+            foreach(var item in _cart)
             {
-                var unitPrice = Database.Products.First(p => p.SKU == item.Key).UnitPrice;
-                var quantity = item.Value;
-
-                var specialPrice = Database.SpecialPrices.FirstOrDefault(sp => sp.Item == item.Key);
-
-                if (specialPrice != null && item.Value >= specialPrice.RequiredQuantity)
-                {
-                    totalPrice += (quantity / specialPrice.RequiredQuantity) * specialPrice.Price + (quantity % specialPrice.RequiredQuantity) * unitPrice;
-                }
-                else
-                {
-                    totalPrice += unitPrice * item.Value;
-                }
+                var product = _productRepository.FindBySKU(item.Key);
+                totalPrice += product.GetPriceByQuantity(item.Value);
             }
 
             return totalPrice;

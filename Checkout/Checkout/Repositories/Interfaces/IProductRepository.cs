@@ -4,6 +4,6 @@ namespace Checkout.Repositories.Interfaces
 {
     public interface IProductRepository
     {
-        public IProduct FindBySKU(string sKU);
+        public IProduct? FindBySKU(string sKU);
     }
 }
